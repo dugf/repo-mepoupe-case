@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Me Poupe',
       theme: ThemeData(
+        fontFamily: 'Poppins',
         primarySwatch: Colors.indigo,
         primaryColor: const Color(0xff6d51ff),
       ),

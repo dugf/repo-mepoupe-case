@@ -22,16 +22,27 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.all(30.0),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text(
-                        'Olá,\nBem-vindo',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Olá,\n',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Poppins',
+                              fontSize: queryData.size.longestSide * 0.034,
+                              fontWeight: FontWeight.w500),
+                          children: const <TextSpan>[
+                            TextSpan(
+                              text: 'Bem-vindo',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -63,22 +74,25 @@ class _MyHomePageState extends State<MyHomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Flexible(
+                              flex: 1,
                               child: Image.asset(
                                 'assets/icons/flag_home_icon.png',
-                                scale: 1.6,
                                 fit: BoxFit.fill,
+                                scale: 1,
                               ),
                             ),
                             const Flexible(
+                              flex: 2,
                               child: FittedBox(
                                 child: Text(
                                   '525',
                                   style: TextStyle(
-                                      fontSize: 50, color: Colors.white),
+                                      fontSize: 100, color: Colors.white),
                                 ),
                               ),
                             ),
                             const Flexible(
+                              flex: 1,
                               child: FittedBox(
                                 child: Text(
                                   'CEPs pesquisados',
@@ -95,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
+              width: queryData.size.width * 0.8,
               child: Card(
                 color: Theme.of(context).primaryColor.withOpacity(0.1),
                 elevation: 0,
@@ -111,7 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Image.asset(
                         'assets/icons/flag_Icon.png',
-                        scale: 1,
                         fit: BoxFit.fill,
                       ),
                       Container(
@@ -119,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text(
                           'CEPs salvos',
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).primaryColor),
                         ),
@@ -150,30 +163,30 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.white,
           elevation: 0,
           selectedItemColor: Theme.of(context).primaryColor,
+          selectedLabelStyle: const TextStyle(fontSize: 12),
           onTap: (int index) {},
           currentIndex: 0,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage('assets/icons/home_icon.png'),
-                size: 50,
+                size: 20,
               ),
-              label: '',
+              label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
-                AssetImage('assets/icons/explore_icon.png'),
-                size: 50,
+                AssetImage('assets/icons/flag_home_icon.png'),
+                size: 20,
               ),
-              label: '',
+              label: 'Procurar',
             ),
             BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage('assets/icons/favorite_icon.png'),
-                size: 50,
-              ),
-              label: '',
-            ),
+                icon: ImageIcon(
+                  AssetImage('assets/icons/star_stroke_icon.png'),
+                  size: 20,
+                ),
+                label: 'Favoritos'),
           ],
         ),
       ),
