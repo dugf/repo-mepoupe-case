@@ -61,14 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.all(24.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
+                          children: [
                             Flexible(
-                              child: Icon(
-                                Icons.compare_arrows,
-                                color: Colors.white,
+                              child: Image.asset(
+                                'assets/icons/flag_home_icon.png',
+                                scale: 1.6,
+                                fit: BoxFit.fill,
                               ),
                             ),
-                            Flexible(
+                            const Flexible(
                               child: FittedBox(
                                 child: Text(
                                   '525',
@@ -77,10 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                             ),
-                            Flexible(
+                            const Flexible(
                               child: FittedBox(
                                 child: Text(
-                                  'CEPs pesquisadas',
+                                  'CEPs pesquisados',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -108,7 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     children: [
-                      const Icon(Icons.flag),
+                      Image.asset(
+                        'assets/icons/flag_Icon.png',
+                        scale: 1,
+                        fit: BoxFit.fill,
+                      ),
                       Container(
                         padding: const EdgeInsets.all(16),
                         child: Text(
@@ -149,16 +154,25 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: 0,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+              icon: ImageIcon(
+                AssetImage('assets/icons/home_icon.png'),
+                size: 50,
+              ),
+              label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.compare_arrows, color: Colors.grey),
-              label: 'Procurar',
+              icon: ImageIcon(
+                AssetImage('assets/icons/explore_icon.png'),
+                size: 50,
+              ),
+              label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.star_outline, color: Colors.grey),
-              label: 'Favoritos',
+              icon: ImageIcon(
+                AssetImage('assets/icons/favorite_icon.png'),
+                size: 50,
+              ),
+              label: '',
             ),
           ],
         ),
