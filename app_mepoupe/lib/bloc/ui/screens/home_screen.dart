@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
+      child: Container(
+        color: Colors.white,
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
@@ -157,36 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          selectedItemColor: Theme.of(context).primaryColor,
-          selectedLabelStyle: const TextStyle(fontSize: 12),
-          onTap: (int index) {},
-          currentIndex: 0,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage('assets/icons/home_icon.png'),
-                size: 20,
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage('assets/icons/flag_home_icon.png'),
-                size: 20,
-              ),
-              label: 'Procurar',
-            ),
-            BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage('assets/icons/star_stroke_icon.png'),
-                  size: 20,
-                ),
-                label: 'Favoritos'),
           ],
         ),
       ),
