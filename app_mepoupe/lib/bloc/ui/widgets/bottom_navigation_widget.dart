@@ -15,8 +15,8 @@ class BottomNavigationWidget extends StatefulWidget {
 class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   List<dynamic> screens = [
     const HomeScreen(),
-    const FavoriteScreen(),
     const SearchScreen(),
+    const FavoriteScreen(),
   ];
 
   @override
@@ -24,6 +24,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     final screenIndexProvider = Provider.of<ScreenIndexProvider>(context);
     int currentScreenIndex = screenIndexProvider.fetchCurrentScreenIndex;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: screens[currentScreenIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,

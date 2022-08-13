@@ -26,23 +26,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(18.0),
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Olá,\n',
-                          style: TextStyle(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Olá',
+                            style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'Poppins',
                               fontSize: queryData.size.longestSide * 0.034,
-                              fontWeight: FontWeight.w500),
-                          children: const <TextSpan>[
-                            TextSpan(
-                              text: 'Bem-vindo',
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.bold),
                             ),
-                          ],
-                        ),
+                          ),
+                          Text(
+                            'Bem-vindo',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Poppins',
+                                fontSize: queryData.size.longestSide * 0.034,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -87,7 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Text(
                                   '525',
                                   style: TextStyle(
-                                      fontSize: 100, color: Colors.white),
+                                    fontSize: 100,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
