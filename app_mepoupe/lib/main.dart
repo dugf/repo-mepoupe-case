@@ -1,5 +1,5 @@
-import 'package:app_mepoupe/bloc/helpers/provider/screen_index_provider.dart';
-import 'package:app_mepoupe/bloc/ui/widgets/bottom_navigation_widget.dart';
+import 'package:app_mepoupe/bloc/screen_index_provider.dart';
+import 'package:app_mepoupe/views/widgets/bottom_navigation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

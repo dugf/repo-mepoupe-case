@@ -1,7 +1,7 @@
-import 'package:app_mepoupe/bloc/helpers/provider/screen_index_provider.dart';
-import 'package:app_mepoupe/bloc/ui/screens/favorite_screen.dart';
-import 'package:app_mepoupe/bloc/ui/screens/home_screen.dart';
-import 'package:app_mepoupe/bloc/ui/screens/search_screen.dart';
+import 'package:app_mepoupe/bloc/screen_index_provider.dart';
+import 'package:app_mepoupe/views/screens/favorite_screen.dart';
+import 'package:app_mepoupe/views/screens/home_screen.dart';
+import 'package:app_mepoupe/views/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
