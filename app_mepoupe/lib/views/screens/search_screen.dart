@@ -1,3 +1,4 @@
+import 'package:app_mepoupe/views/widgets/address_return_zipcode.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -8,136 +9,94 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController textNumberEditController = TextEditingController();
+  String? validateReturnField = 'none';
+  final returnedInvalidData = 'none';
+  final returnedValidData = 'returnedOk';
+  final returnedNoValidData = 'noReturnedValid';
+  final returnedDifferentData = 'differentData';
 
   @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
 
-    return Column(
-      children: [
-        Container(
-          height: queryData.size.height * 0.4 - kBottomNavigationBarHeight,
-          color: Theme.of(context).primaryColor,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 40, left: 30, right: 30, bottom: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FittedBox(
-                  child: Text(
-                    'Procurar CEP',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      fontSize: MediaQuery.of(context).size.longestSide * 0.034,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: FittedBox(
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          Container(
+            height: queryData.size.height * 0.44 - kBottomNavigationBarHeight,
+            color: Theme.of(context).primaryColor,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 30, left: 30, right: 30, bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FittedBox(
                     child: Text(
-                      'Digite o CEP que você\n desejo procurar',
-                      textAlign: TextAlign.center,
+                      'Procurar CEP',
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
                         fontSize:
-                            MediaQuery.of(context).size.longestSide * 0.02,
+                            MediaQuery.of(context).size.longestSide * 0.034,
                       ),
                     ),
                   ),
-                ),
-                Center(
-                  child: TextField(
-                    textInputAction: TextInputAction.search,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(40.0),
-                          borderSide: BorderSide.none),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.asset(
-                          'assets/icons/search_icon.png',
-                          fit: BoxFit.fill,
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                      prefixIconColor: Colors.black,
-                      filled: true,
-                      hintText: '88330-301',
-                      fillColor: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: Text(
-                      'Endereço:',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                  const Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                  Center(
+                    child: FittedBox(
                       child: Text(
-                          'Rua indaial - até 583 - Itajaí SC -\nCEP 88303-301'),
-                    ),
-                  ),
-                  SizedBox(
-                    width: queryData.size.width * 0.8,
-                    child: Card(
-                      color: const Color.fromRGBO(46, 23, 157, 1),
-                      elevation: 0,
-                      shape: const StadiumBorder(
-                        side: BorderSide(
-                          color: Colors.transparent,
-                          width: 2.0,
+                        'Digite o CEP que você\n desejo procurar',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontSize:
+                              MediaQuery.of(context).size.longestSide * 0.02,
                         ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              'assets/icons/star_stroke_icon.png',
-                              fit: BoxFit.fill,
-                            ),
-                            Flexible(
-                              child: Container(
-                                padding: const EdgeInsets.all(16),
-                                child: const FittedBox(
-                                  child: Text(
-                                    'Adicionar aos favoritos',
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                    ),
+                  ),
+                  Center(
+                    child: TextFormField(
+                      controller: textNumberEditController,
+                      validator: (cep) {
+                        if (cep!.isEmpty) {
+                          return 'Campo obrigatório';
+                        } else if (cep.length != 8) {
+                          return 'CEP inválido';
+                        } else {
+                          null;
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: ((value) => validateTextFormField()),
+                      maxLength: 8,
+                      // inputFormatters: [FilterRemoveCharacters()],
+                      textInputAction: TextInputAction.search,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        counterText: '',
+                        contentPadding:
+                            const EdgeInsets.symmetric(vertical: 14),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(40.0),
+                            borderSide: BorderSide.none),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Image.asset(
+                            'assets/icons/search_icon.png',
+                            fit: BoxFit.fill,
+                          ),
                         ),
+                        prefixIconColor: Colors.black,
+                        filled: true,
+                        hintText: '88330-301',
+                        fillColor: Colors.white,
                       ),
                     ),
                   ),
@@ -145,8 +104,45 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Container(
+              width: queryData.size.width,
+              color: Colors.white,
+              child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (validateReturnField == textNumberEditController.text)
+                        const AddressReturnZipcode(),
+                      if (validateReturnField == returnedNoValidData)
+                        const FittedBox(
+                          child: Text(
+                              'Não conseguimos localizar seu endereço, verifique se as informações passadas estão corretas'),
+                        ),
+                      if (validateReturnField == returnedInvalidData ||
+                          validateReturnField == returnedDifferentData)
+                        Flexible(
+                          child: Image.asset(
+                            'assets/images/location_review_bro_cep.png',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                    ],
+                  )),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  validateTextFormField() {
+    if (formKey.currentState!.validate()) {
+      setState(() {
+        validateReturnField = textNumberEditController.text;
+      });
+      return;
+    }
   }
 }
