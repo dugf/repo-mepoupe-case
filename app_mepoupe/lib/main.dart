@@ -1,3 +1,4 @@
+import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/bloc/screen_index_provider.dart';
 import 'package:app_mepoupe/views/widgets/bottom_navigation_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ScreenIndexProvider())
+        ChangeNotifierProvider(create: (context) => ScreenIndexProvider()),
+        ChangeNotifierProvider(create: (context) => AddressManager()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,5 +1,4 @@
 class ViaCepAddress {
-  double? altitude;
   String? cep;
   String? logradouro;
   String? bairro;
@@ -9,8 +8,7 @@ class ViaCepAddress {
 
   //PEGANDO OS DADOS DA API, ESPECIFICANDO CADA DADO DO MAP
   ViaCepAddress.fromMap(Map<String, dynamic>? map) {
-    altitude = map!['altitude'];
-    cep = map['cep'];
+    cep = map!['cep'];
     logradouro = map['logradouro'];
     bairro = map['bairro'];
     localidade = map['localidade'];

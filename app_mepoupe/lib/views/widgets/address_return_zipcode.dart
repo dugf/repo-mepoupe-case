@@ -1,7 +1,10 @@
+import 'package:app_mepoupe/bloc/address.dart';
 import 'package:flutter/material.dart';
 
 class AddressReturnZipcode extends StatelessWidget {
-  const AddressReturnZipcode({Key? key}) : super(key: key);
+  final Address address;
+  const AddressReturnZipcode({Key? key, required this.address})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +24,17 @@ class AddressReturnZipcode extends StatelessWidget {
                   color: Theme.of(context).primaryColor),
             ),
           ),
-          const Flexible(
+          Flexible(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Text('Rua indaial - até 583 - Itajaí SC -\nCEP 88303-301'),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: address.complement != null
+                  ? Text('${address.street} '
+                      '- ${address.complement} '
+                      '- ${address.city} '
+                      '- CEP ${address.zipCode}')
+                  : Text('${address.street} '
+                      '- ${address.city} '
+                      '- CEP ${address.zipCode}'),
             ),
           ),
           SizedBox(

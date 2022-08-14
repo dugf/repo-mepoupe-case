@@ -27,7 +27,7 @@ class AddressManager extends ChangeNotifier {
       );
       notifyListeners();
     } catch (e) {
-      rethrow;
+      return;
     }
   }
 

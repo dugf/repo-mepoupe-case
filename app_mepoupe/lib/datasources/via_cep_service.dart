@@ -1,4 +1,4 @@
-import 'package:app_mepoupe/bloc/via-cep-address.dart';
+import 'package:app_mepoupe/bloc/via_cep_address.dart';
 import 'package:dio/dio.dart';
 
 class ViaCepService {
