@@ -1,3 +1,4 @@
+import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/datasources/db_util.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,11 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  DbUtil dbUtil = DbUtil();
+
   @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
-    DbUtil dbUtil = DbUtil();
     final load =
         Provider.of<AddressManager>(context, listen: false).loadPlaces();
     return Container(
@@ -111,11 +113,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                   height: 20,
                                                 ),
                                                 onTap: () {
-                                                  setState(() {
-                                                    dbUtil.deletePlace(
-                                                        int.parse(
-                                                            pathItem.id!));
-                                                  });
+                                                  showAlertDialog(
+                                                      context, pathItem);
                                                 },
                                               ),
                                             ],
@@ -147,6 +146,47 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context, Address pathItem) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text(
+        "OK",
+        style: TextStyle(color: Theme.of(context).primaryColor),
+      ),
+      onPressed: () {
+        setState(() {
+          dbUtil.deletePlace(int.parse(pathItem.id!));
+        });
+        Navigator.pop(context);
+      },
+    );
+
+    Widget cancelButton = TextButton(
+      child: const Text(
+        "Cancelar",
+        style: TextStyle(color: Colors.red),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Deseja realmente remover?"),
+      content: const Text("Esta ação não pode ser desfeita."),
+      actions: [cancelButton, okButton],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
