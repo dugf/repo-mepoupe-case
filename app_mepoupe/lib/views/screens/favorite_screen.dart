@@ -1,12 +1,22 @@
+import 'package:app_mepoupe/bloc/address_manager.dart';
+import 'package:app_mepoupe/datasources/db_util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class FavoriteScreen extends StatelessWidget {
+class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 
   @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreen> {
+  @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
-
+    DbUtil dbUtil = DbUtil();
+    final loaf =
+        Provider.of<AddressManager>(context, listen: false).loadPlaces();
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -51,125 +61,89 @@ class FavoriteScreen extends StatelessWidget {
             ),
             Expanded(
               flex: 7,
-              child: ListView(
-                children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                '88330-301',
-                                style: TextStyle(fontSize: 16),
+              child: FutureBuilder(
+                future: loaf,
+                builder: (ctx, snapshot) => snapshot.connectionState ==
+                        ConnectionState.waiting
+                    ? Container(
+                        color: Colors.transparent,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : Consumer<AddressManager>(
+                        child: const Center(
+                          child: null,
+                        ),
+                        builder: (ctx, greatPlaces, ch) => greatPlaces
+                                    .itemsCount ==
+                                0
+                            ? ch!
+                            : ListView.builder(
+                                itemCount: greatPlaces.itemsCount,
+                                itemBuilder: (ctx, i) {
+                                  final pathItem =
+                                      greatPlaces.getItemByIndex(i);
+                                  return Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                pathItem.zipCode!,
+                                                style: const TextStyle(
+                                                    fontSize: 16),
+                                              ),
+                                              InkWell(
+                                                child: Image.asset(
+                                                  'assets/icons/delete_icon.png',
+                                                  fit: BoxFit.fill,
+                                                  width: 20,
+                                                  height: 20,
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    dbUtil.deletePlace(
+                                                        int.parse(
+                                                            pathItem.id!));
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: FittedBox(
+                                              child: pathItem
+                                                      .complement!.isNotEmpty
+                                                  ? Text('${pathItem.street} '
+                                                      '- ${pathItem.complement} '
+                                                      '- ${pathItem.city} '
+                                                      '- CEP ${pathItem.zipCode}')
+                                                  : Text('${pathItem.street} '
+                                                      '- ${pathItem.city} '
+                                                      '- CEP ${pathItem.zipCode}'),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                              InkWell(
-                                child: Image.asset(
-                                  'assets/icons/delete_icon.png',
-                                  fit: BoxFit.fill,
-                                  width: 20,
-                                  height: 20,
-                                ),
-                                onTap: () {},
-                              ),
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: FittedBox(
-                              child: Text(
-                                  'Rua indaial - até 583 - Itajaí SC -CEP\n88303-301'),
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                '88330-301',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              InkWell(
-                                child: Image.asset(
-                                  'assets/icons/delete_icon.png',
-                                  fit: BoxFit.fill,
-                                  width: 20,
-                                  height: 20,
-                                ),
-                                onTap: () {},
-                              ),
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: FittedBox(
-                              child: Text(
-                                  'Rua indaial - até 583 - Itajaí SC -CEP\n88303-301'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                '88330-301',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              InkWell(
-                                child: Image.asset(
-                                  'assets/icons/delete_icon.png',
-                                  fit: BoxFit.fill,
-                                  width: 20,
-                                  height: 20,
-                                ),
-                                onTap: () {},
-                              ),
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: FittedBox(
-                              child: Text(
-                                  'Rua indaial - até 583 - Itajaí SC -CEP\n88303-301'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
               ),
-            )
+            ),
           ],
         ),
       ),
