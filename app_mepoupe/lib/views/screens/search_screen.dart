@@ -3,6 +3,7 @@ import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/datasources/via_cep_service.dart';
 import 'package:app_mepoupe/views/widgets/address_return_zipcode.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -172,25 +173,33 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<dynamic> validateTextFormField(AddressManager addressManager) async {
     final ViaCepService viaCepAddress = ViaCepService();
+    bool result = await InternetConnectionChecker().hasConnection;
 
-    if (formKey.currentState!.validate()) {
-      validateReturnField = returnedDifferentData;
-      context
-          .read<AddressManager>()
-          .getAddress(textCepEditingController.text)
-          .toString();
+    if (result == true) {
+      if (formKey.currentState!.validate()) {
+        validateReturnField = returnedDifferentData;
+        if (!mounted) {}
+        context
+            .read<AddressManager>()
+            .getAddress(textCepEditingController.text)
+            .toString();
 
-      try {
-        await viaCepAddress.getAddressFromCEP(textCepEditingController.text);
-        setState(() {
-          validateReturnField = returnedValidData;
-        });
-      } catch (e) {
-        setState(() {
-          validateReturnField = returnedNoValidData;
-        });
-        return;
+        try {
+          await viaCepAddress.getAddressFromCEP(textCepEditingController.text);
+          setState(() {
+            validateReturnField = returnedValidData;
+          });
+        } catch (e) {
+          setState(() {
+            validateReturnField = returnedNoValidData;
+          });
+          return;
+        }
       }
+    } else {
+      if (!mounted) {}
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('SEM INTERNET')));
     }
   }
 }
