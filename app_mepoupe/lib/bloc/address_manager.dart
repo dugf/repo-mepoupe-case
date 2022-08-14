@@ -13,7 +13,6 @@ class AddressManager extends ChangeNotifier {
     final ViaCepService viaCepAddress = ViaCepService();
     try {
       final addressViaCep = await viaCepAddress.getAddressFromCEP(cep);
-      print('ENDERECO ${address?.zipCode}');
       address = Address(
         street: addressViaCep.logradouro,
         district: addressViaCep.bairro,

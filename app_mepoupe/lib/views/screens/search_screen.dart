@@ -21,6 +21,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final returnedValidData = 'returnedOk';
   final returnedNoValidData = 'noReturnedValid';
   final returnedDifferentData = 'differentData';
+
   var maskFormatter = MaskTextInputFormatter(
       mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
 
@@ -31,13 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Consumer<AddressManager>(builder: (_, addressManager, __) {
       final address = addressManager.address ?? Address();
       final getCeps = addressManager.items.map((e) => e.zipCode);
-      if (getCeps == null) {
-        if (getCeps.isEmpty) {
-          context.read<AddressManager>().loadPlaces();
-        }
-      }
 
-      print('PRECISAMOS DESSES CARAS $getCeps');
       return Form(
         key: formKey,
         child: Column(
@@ -83,15 +78,16 @@ class _SearchScreenState extends State<SearchScreen> {
                         controller: textCepEditingController,
                         validator: (cep) {
                           if (cep!.isEmpty) {
-                            return 'Campo obrigatório';
+                            return 'Campo obrigatório!';
                           } else if (cep.length != 9) {
-                            return 'CEP inválido';
+                            return 'CEP inválido!';
                           } else {
                             null;
                           }
                           return null;
                         },
-                        onFieldSubmitted: ((value) => validateTextFormField()),
+                        onFieldSubmitted: ((value) =>
+                            validateTextFormField(addressManager)),
                         maxLength: 9,
                         inputFormatters: [maskFormatter],
                         textInputAction: TextInputAction.search,
@@ -109,6 +105,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               'assets/icons/search_icon.png',
                               fit: BoxFit.fill,
                             ),
+                          ),
+                          errorStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
                           ),
                           prefixIconColor: Colors.black,
                           filled: true,
@@ -134,6 +134,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         address.zipCode == null
                             ? const CircularProgressIndicator()
                             : AddressReturnZipcode(
+                                colorFavoriteZipCode: getCeps.contains(
+                                        addressManager.address?.zipCode)
+                                    ? true
+                                    : false,
                                 address: address,
                               ),
                       if (validateReturnField == returnedNoValidData)
@@ -166,7 +170,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  Future<void> validateTextFormField() async {
+  Future<dynamic> validateTextFormField(AddressManager addressManager) async {
     final ViaCepService viaCepAddress = ViaCepService();
 
     if (formKey.currentState!.validate()) {

@@ -11,8 +11,6 @@ class ViaCepService {
 
     var response = await dio.get(endPoint);
 
-    print('ENDPOINT $endPoint');
-
     //VALIDANDO SE O DADO RETORNADO É VÁLIDO
     try {
       final ViaCepAddress address = ViaCepAddress.fromMap(response.data);

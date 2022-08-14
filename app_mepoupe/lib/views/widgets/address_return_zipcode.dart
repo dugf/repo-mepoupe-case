@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 
 class AddressReturnZipcode extends StatefulWidget {
   final Address address;
-  const AddressReturnZipcode({Key? key, required this.address})
+  final bool? colorFavoriteZipCode;
+  const AddressReturnZipcode(
+      {Key? key, required this.address, required this.colorFavoriteZipCode})
       : super(key: key);
 
   @override
@@ -13,10 +15,10 @@ class AddressReturnZipcode extends StatefulWidget {
 }
 
 class _AddressReturnZipcodeState extends State<AddressReturnZipcode> {
-  bool? colorFavoriteZipCode = false;
   @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
+    bool? colorFavoriteZipCode = widget.colorFavoriteZipCode;
 
     return Flexible(
       child: Column(
@@ -80,15 +82,20 @@ class _AddressReturnZipcodeState extends State<AddressReturnZipcode> {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         child: FittedBox(
-                          child: Text(
-                            'Adicionar aos favoritos',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: colorFavoriteZipCode == true
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.white,
-                            ),
-                          ),
+                          child: colorFavoriteZipCode == true
+                              ? Text(
+                                  'Adicionado aos favoritos',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Theme.of(context).primaryColor),
+                                )
+                              : const Text(
+                                  'Adicionar aos favoritos',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
