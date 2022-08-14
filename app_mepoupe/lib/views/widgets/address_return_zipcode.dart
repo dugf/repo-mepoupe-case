@@ -27,14 +27,15 @@ class AddressReturnZipcode extends StatelessWidget {
           Flexible(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: address.complement != null
-                  ? Text('${address.street} '
-                      '- ${address.complement} '
-                      '- ${address.city} '
-                      '- CEP ${address.zipCode}')
-                  : Text('${address.street} '
-                      '- ${address.city} '
-                      '- CEP ${address.zipCode}'),
+              child:
+                  address.complement != null && address.complement!.isNotEmpty
+                      ? Text('${address.street} '
+                          '- ${address.complement} '
+                          '- ${address.city} '
+                          '- CEP ${address.zipCode}')
+                      : Text('${address.street} '
+                          '- ${address.city} '
+                          '- CEP ${address.zipCode}'),
             ),
           ),
           SizedBox(

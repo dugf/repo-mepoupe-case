@@ -4,6 +4,7 @@ import 'package:app_mepoupe/datasources/via_cep_service.dart';
 import 'package:app_mepoupe/views/widgets/address_return_zipcode.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class _SearchScreenState extends State<SearchScreen> {
   final returnedValidData = 'returnedOk';
   final returnedNoValidData = 'noReturnedValid';
   final returnedDifferentData = 'differentData';
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         validator: (cep) {
                           if (cep!.isEmpty) {
                             return 'Campo obrigatório';
-                          } else if (cep.length != 8) {
+                          } else if (cep.length != 9) {
                             return 'CEP inválido';
                           } else {
                             null;
@@ -81,8 +84,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           return null;
                         },
                         onFieldSubmitted: ((value) => validateTextFormField()),
-                        maxLength: 8,
-                        // inputFormatters: [FilterRemoveCharacters()],
+                        maxLength: 9,
+                        inputFormatters: [maskFormatter],
                         textInputAction: TextInputAction.search,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
@@ -101,7 +104,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           prefixIconColor: Colors.black,
                           filled: true,
-                          hintText: '88330-301',
+                          hintText: '12345-678',
                           fillColor: Colors.white,
                         ),
                       ),
@@ -120,9 +123,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (validateReturnField == returnedValidData)
-                        AddressReturnZipcode(
-                          address: address,
-                        ),
+                        address.zipCode == null
+                            ? const CircularProgressIndicator()
+                            : AddressReturnZipcode(
+                                address: address,
+                              ),
                       if (validateReturnField == returnedNoValidData)
                         const Flexible(
                           child: Text(
