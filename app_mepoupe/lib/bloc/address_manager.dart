@@ -48,6 +48,7 @@ class AddressManager extends ChangeNotifier {
           ),
         )
         .toList();
+
     notifyListeners();
   }
 

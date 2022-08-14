@@ -15,7 +15,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
     DbUtil dbUtil = DbUtil();
-    final loaf =
+    final load =
         Provider.of<AddressManager>(context, listen: false).loadPlaces();
     return Container(
       decoration: BoxDecoration(
@@ -62,7 +62,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             Expanded(
               flex: 7,
               child: FutureBuilder(
-                future: loaf,
+                future: load,
                 builder: (ctx, snapshot) => snapshot.connectionState ==
                         ConnectionState.waiting
                     ? Container(

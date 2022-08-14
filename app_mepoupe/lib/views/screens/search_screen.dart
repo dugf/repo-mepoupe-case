@@ -30,6 +30,14 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Consumer<AddressManager>(builder: (_, addressManager, __) {
       final address = addressManager.address ?? Address();
+      final getCeps = addressManager.items.map((e) => e.zipCode);
+      if (getCeps == null) {
+        if (getCeps.isEmpty) {
+          context.read<AddressManager>().loadPlaces();
+        }
+      }
+
+      print('PRECISAMOS DESSES CARAS $getCeps');
       return Form(
         key: formKey,
         child: Column(
