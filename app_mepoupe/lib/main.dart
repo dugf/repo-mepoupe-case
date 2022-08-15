@@ -1,9 +1,11 @@
 import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/bloc/screen_index_provider.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:app_mepoupe/views/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +24,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    funcInitShared();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ScreenIndexProvider()),
@@ -41,5 +45,10 @@ class _MyAppState extends State<MyApp> {
         home: const SplashScreen(),
       ),
     );
+  }
+
+  funcInitShared() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('returnScreen', Strings.returnNoneSearchType);
   }
 }
