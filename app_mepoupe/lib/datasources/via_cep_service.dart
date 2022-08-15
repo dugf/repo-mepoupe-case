@@ -3,7 +3,6 @@ import 'package:app_mepoupe/resources/strings.dart';
 import 'package:dio/dio.dart';
 
 class ViaCepService {
-  //FUNCAO RESPONSÁVEL POR PEGAR OS DADOS DO LINK
   Future<ViaCepAddress> getAddressFromCEP(String cep) async {
     final cleanCep = cep.replaceAll('.', '').replaceAll('-', '');
     final endPoint = 'https://viacep.com.br/ws/$cleanCep/json/';
@@ -12,7 +11,6 @@ class ViaCepService {
 
     var response = await dio.get(endPoint);
 
-    //VALIDANDO SE O DADO RETORNADO É VÁLIDO
     try {
       final ViaCepAddress address = ViaCepAddress.fromMap(response.data);
       if (response.data.toString() == '{erro: true}') {
