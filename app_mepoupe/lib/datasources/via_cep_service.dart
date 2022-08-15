@@ -1,4 +1,5 @@
 import 'package:app_mepoupe/bloc/via_cep_address.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:dio/dio.dart';
 
 class ViaCepService {
@@ -15,11 +16,11 @@ class ViaCepService {
     try {
       final ViaCepAddress address = ViaCepAddress.fromMap(response.data);
       if (response.data.toString() == '{erro: true}') {
-        return Future.error('CEP INVÁLIDO');
+        return Future.error(Strings.zipCodeInvalid);
       }
       return address;
     } on DioError {
-      return Future.error('ERRO AO BUSCAR CEP');
+      return Future.error(Strings.zipCodeError);
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/datasources/via_cep_service.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:app_mepoupe/views/widgets/address_return_zipcode.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -18,11 +19,11 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController textCepEditingController = TextEditingController();
-  String? validateReturnField = 'none';
-  final returnedInvalidData = 'none';
-  final returnedValidData = 'returnedOk';
-  final returnedNoValidData = 'noReturnedValid';
-  final returnedDifferentData = 'differentData';
+  String? validateReturnField = Strings.noneTextSearch;
+  final returnedInvalidData = Strings.noneTextSearch;
+  final returnedValidData = Strings.returnOkTextSearch;
+  final returnedNoValidData = Strings.noReturnValidTextSearch;
+  final returnedDifferentData = Strings.differentDataTextSearch;
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
@@ -51,10 +52,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     FittedBox(
                       child: Text(
-                        'Procurar CEP',
+                        Strings.getSearchZipCode,
                         style: TextStyle(
                           color: Colors.white,
-                          fontFamily: 'Poppins',
+                          fontFamily: Strings.fontPoppins,
                           fontWeight: FontWeight.w600,
                           fontSize:
                               MediaQuery.of(context).size.longestSide * 0.034,
@@ -64,11 +65,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     Center(
                       child: FittedBox(
                         child: Text(
-                          'Digite o CEP que você\n desejo procurar',
+                          Strings.insertZipCode,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
-                            fontFamily: 'Poppins',
+                            fontFamily: Strings.fontPoppins,
                             fontSize:
                                 MediaQuery.of(context).size.longestSide * 0.02,
                           ),
@@ -80,9 +81,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         controller: textCepEditingController,
                         validator: (cep) {
                           if (cep!.isEmpty) {
-                            return 'Campo obrigatório!';
+                            return Strings.fieldRequired;
                           } else if (cep.length != 9) {
-                            return 'CEP inválido!';
+                            return Strings.invalidZipCode;
                           } else {
                             null;
                           }
@@ -145,7 +146,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       if (validateReturnField == returnedNoValidData)
                         const Flexible(
                           child: Text(
-                            'Não conseguimos localizar seu endereço, verifique se as informações passadas estão corretas!',
+                            Strings.returnNotDataValidSearch,
                             style: TextStyle(fontSize: 18),
                             textAlign: TextAlign.center,
                           ),
@@ -206,7 +207,7 @@ class _SearchScreenState extends State<SearchScreen> {
     } else {
       if (!mounted) {}
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('SEM INTERNET')));
+          .showSnackBar(const SnackBar(content: Text(Strings.internetOff)));
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/bloc/address_manager.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,16 +37,26 @@ class _AddressReturnZipcodeState extends State<AddressReturnZipcode> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: widget.address.complement != null &&
                       widget.address.complement!.isNotEmpty
-                  ? Text('${widget.address.street} '
+                  ? Text(
+                      '${widget.address.street} '
                       '- ${widget.address.complement} '
                       '- ${widget.address.city} '
-                      '- CEP ${widget.address.zipCode}')
-                  : Text('${widget.address.street} '
+                      '- CEP ${widget.address.zipCode}',
+                      style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).size.longestSide * .02),
+                    )
+                  : Text(
+                      '${widget.address.street} '
                       '- ${widget.address.city} '
-                      '- CEP ${widget.address.zipCode}'),
+                      '- CEP ${widget.address.zipCode}',
+                      style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).size.longestSide * .02),
+                    ),
             ),
           ),
           Flexible(
@@ -84,13 +95,13 @@ class _AddressReturnZipcodeState extends State<AddressReturnZipcode> {
                         child: FittedBox(
                           child: colorFavoriteZipCode == true
                               ? Text(
-                                  'Adicionado aos favoritos',
+                                  Strings.addFavoritedButton,
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Theme.of(context).primaryColor),
                                 )
                               : const Text(
-                                  'Adicionar aos favoritos',
+                                  Strings.addToFavoritesButton,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,

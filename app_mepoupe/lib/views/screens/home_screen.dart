@@ -1,4 +1,5 @@
 import 'package:app_mepoupe/bloc/address_manager.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,18 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'Olá',
+                              Strings.titleHome,
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Poppins',
+                                fontFamily: Strings.fontPoppins,
                                 fontSize: queryData.size.longestSide * 0.034,
                               ),
                             ),
                             Text(
-                              'Bem-vindo',
+                              Strings.subtitleHome,
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: Strings.fontPoppins,
                                   fontSize: queryData.size.longestSide * 0.034,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -115,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 flex: 1,
                                 child: FittedBox(
                                   child: Text(
-                                    'CEPs pesquisados',
+                                    Strings.zipCodeSearchsHome,
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),
@@ -150,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           padding: const EdgeInsets.all(16),
                           child: Text(
-                            'CEPs salvos',
+                            Strings.zipCodeSavedsHome,
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

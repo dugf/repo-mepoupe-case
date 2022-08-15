@@ -1,10 +1,10 @@
 import 'package:app_mepoupe/bloc/screen_index_provider.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:app_mepoupe/views/screens/favorite_screen.dart';
 import 'package:app_mepoupe/views/screens/home_screen.dart';
 import 'package:app_mepoupe/views/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class BottomNavigationWidget extends StatefulWidget {
   const BottomNavigationWidget({Key? key}) : super(key: key);
@@ -41,21 +41,21 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                 AssetImage('assets/icons/home_icon.png'),
                 size: 20,
               ),
-              label: 'Home',
+              label: Strings.labelHome,
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage('assets/icons/flag_home_icon.png'),
                 size: 20,
               ),
-              label: 'Procurar',
+              label: Strings.labelSearch,
             ),
             BottomNavigationBarItem(
                 icon: ImageIcon(
                   AssetImage('assets/icons/star_stroke_icon.png'),
                   size: 20,
                 ),
-                label: 'Favoritos'),
+                label: Strings.labelFavorites),
           ],
         ),
       ),

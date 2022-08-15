@@ -1,6 +1,7 @@
 import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/datasources/db_util.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,10 +51,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       color: Theme.of(context).primaryColor,
                     ),
                     Text(
-                      'Meus favoritos',
+                      Strings.myFavorites,
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontFamily: 'Poppins',
+                          fontFamily: Strings.fontPoppins,
                           fontSize: queryData.size.longestSide * 0.034,
                           fontWeight: FontWeight.w600),
                     ),
@@ -122,17 +123,31 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 8.0),
-                                            child: FittedBox(
-                                              child: pathItem
-                                                      .complement!.isNotEmpty
-                                                  ? Text('${pathItem.street} '
-                                                      '- ${pathItem.complement} '
-                                                      '- ${pathItem.city} '
-                                                      '- CEP ${pathItem.zipCode}')
-                                                  : Text('${pathItem.street} '
-                                                      '- ${pathItem.city} '
-                                                      '- CEP ${pathItem.zipCode}'),
-                                            ),
+                                            child:
+                                                pathItem.complement!.isNotEmpty
+                                                    ? Text(
+                                                        '${pathItem.street} '
+                                                        '- ${pathItem.complement} '
+                                                        '- ${pathItem.city} '
+                                                        '- CEP ${pathItem.zipCode}',
+                                                        style: TextStyle(
+                                                            fontSize: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .longestSide *
+                                                                .016),
+                                                      )
+                                                    : Text(
+                                                        '${pathItem.street} '
+                                                        '- ${pathItem.city} '
+                                                        '- CEP ${pathItem.zipCode}',
+                                                        style: TextStyle(
+                                                            fontSize: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .longestSide *
+                                                                .016),
+                                                      ),
                                           ),
                                         ],
                                       ),
@@ -152,7 +167,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   showAlertDialog(BuildContext context, Address pathItem) {
     Widget okButton = TextButton(
       child: Text(
-        "OK",
+        Strings.okButtonAlert,
         style: TextStyle(color: Theme.of(context).primaryColor),
       ),
       onPressed: () {
@@ -165,7 +180,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
     Widget cancelButton = TextButton(
       child: const Text(
-        "Cancelar",
+        Strings.cancelButtonAlert,
         style: TextStyle(color: Colors.red),
       ),
       onPressed: () {
@@ -174,8 +189,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: const Text("Deseja realmente remover?"),
-      content: const Text("Esta ação não pode ser desfeita."),
+      title: const Text(Strings.favoriteTitleAlert),
+      content: const Text(Strings.favoriteSubitleAlert),
       actions: [cancelButton, okButton],
     );
 
