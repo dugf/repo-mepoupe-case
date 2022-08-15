@@ -1,6 +1,7 @@
 import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/datasources/via_cep_service.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:app_mepoupe/views/widgets/address_return_zipcode.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -18,11 +19,12 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController textCepEditingController = TextEditingController();
-  String? validateReturnField = 'none';
-  final returnedInvalidData = 'none';
-  final returnedValidData = 'returnedOk';
-  final returnedNoValidData = 'noReturnedValid';
-  final returnedDifferentData = 'differentData';
+  String? validateReturnScreen = Strings.returnNoneSearchType;
+  final returnedInvalidData = Strings.returnNoneSearchType;
+  final returnedValidData = Strings.returnOkeSearchType;
+  final returnedNoValidData = Strings.noReturnValidSearchType;
+  final returnedDifferentData = Strings.returnDifferentSearchType;
+  final returndatashared = Strings.returnNoneSearchType;
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
@@ -35,6 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
       final address = addressManager.address ?? Address();
       final getCeps = addressManager.items.map((e) => e.zipCode);
 
+      getScreenShared();
       return Form(
         key: formKey,
         child: Column(
@@ -51,10 +54,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     FittedBox(
                       child: Text(
-                        'Procurar CEP',
+                        Strings.searchZipCode,
                         style: TextStyle(
                           color: Colors.white,
-                          fontFamily: 'Poppins',
+                          fontFamily: Strings.fontPoppins,
                           fontWeight: FontWeight.w600,
                           fontSize:
                               MediaQuery.of(context).size.longestSide * 0.034,
@@ -64,11 +67,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     Center(
                       child: FittedBox(
                         child: Text(
-                          'Digite o CEP que você\n desejo procurar',
+                          Strings.insertZipCodeToSearch,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
-                            fontFamily: 'Poppins',
+                            fontFamily: Strings.fontPoppins,
                             fontSize:
                                 MediaQuery.of(context).size.longestSide * 0.02,
                           ),
@@ -80,9 +83,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         controller: textCepEditingController,
                         validator: (cep) {
                           if (cep!.isEmpty) {
-                            return 'Campo obrigatório!';
+                            return Strings.requiredField;
                           } else if (cep.length != 9) {
-                            return 'CEP inválido!';
+                            return Strings.invalidZipCode;
                           } else {
                             null;
                           }
@@ -114,7 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           prefixIconColor: Colors.black,
                           filled: true,
-                          hintText: '12345-678',
+                          hintText: Strings.hintTextZipCode,
                           fillColor: Colors.white,
                         ),
                       ),
@@ -132,7 +135,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (validateReturnField == returnedValidData)
+                      if (validateReturnScreen == returnedValidData)
                         address.zipCode == null
                             ? const CircularProgressIndicator()
                             : AddressReturnZipcode(
@@ -142,22 +145,22 @@ class _SearchScreenState extends State<SearchScreen> {
                                     : false,
                                 address: address,
                               ),
-                      if (validateReturnField == returnedNoValidData)
+                      if (validateReturnScreen == returnedNoValidData)
                         const Flexible(
                           child: Text(
-                            'Não conseguimos localizar seu endereço, verifique se as informações passadas estão corretas!',
+                            Strings.noReturnValidSearch,
                             style: TextStyle(fontSize: 18),
                             textAlign: TextAlign.center,
                           ),
                         ),
-                      if (validateReturnField == returnedInvalidData)
+                      if (validateReturnScreen == returnedInvalidData)
                         Flexible(
                           child: Image.asset(
                             'assets/images/location_review_bro_cep.png',
                             fit: BoxFit.fill,
                           ),
                         ),
-                      if (validateReturnField == returnedDifferentData)
+                      if (validateReturnScreen == returnedDifferentData)
                         const Center(
                           child: CircularProgressIndicator(),
                         ),
@@ -180,11 +183,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
     if (result == true) {
       if (formKey.currentState!.validate()) {
-        var returnCounter = prefs.getInt('counter') ?? 0;
-        final addCounter = returnCounter + 1;
-        await prefs.setInt('counter', addCounter);
+        prefs.setString('returnScreen', returnedDifferentData);
+        validateReturnScreen = returnedDifferentData;
 
-        validateReturnField = returnedDifferentData;
         if (!mounted) {}
         context
             .read<AddressManager>()
@@ -193,12 +194,19 @@ class _SearchScreenState extends State<SearchScreen> {
 
         try {
           await viaCepAddress.getAddressFromCEP(textCepEditingController.text);
+
+          validateReturnScreen = returnedValidData;
+          prefs.setString('returnScreen', returnedValidData);
           setState(() {
-            validateReturnField = returnedValidData;
+            validateReturnScreen = returnedValidData;
           });
         } catch (e) {
+          validateReturnScreen = returnedNoValidData;
+
+          prefs.setString('returnScreen', returnedNoValidData);
+
           setState(() {
-            validateReturnField = returnedNoValidData;
+            validateReturnScreen = returnedNoValidData;
           });
           return;
         }
@@ -206,7 +214,16 @@ class _SearchScreenState extends State<SearchScreen> {
     } else {
       if (!mounted) {}
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('SEM INTERNET')));
+          .showSnackBar(const SnackBar(content: Text(Strings.noInternet)));
     }
+  }
+
+  getScreenShared() async {
+    final prefs = await SharedPreferences.getInstance();
+    final returndatashared = prefs.getString('returnScreen');
+
+    setState(() {
+      validateReturnScreen = returndatashared;
+    });
   }
 }
