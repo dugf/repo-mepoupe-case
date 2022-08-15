@@ -30,13 +30,10 @@ class _SearchScreenState extends State<SearchScreen> {
       mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
+
+    print('entrei no build do search $validateReturnScreen');
 
     return Consumer<AddressManager>(builder: (_, addressManager, __) {
       final address = addressManager.address ?? Address();
@@ -188,8 +185,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
     if (result == true) {
       if (formKey.currentState!.validate()) {
-        validateReturnScreen = returnedDifferentData;
         prefs.setString('returnScreen', returnedDifferentData);
+        validateReturnScreen = returnedDifferentData;
 
         if (!mounted) {}
         context
@@ -206,6 +203,7 @@ class _SearchScreenState extends State<SearchScreen> {
           });
         } catch (e) {
           validateReturnScreen = returnedNoValidData;
+
           prefs.setString('returnScreen', returnedNoValidData);
           setState(() {
             validateReturnScreen = returnedNoValidData;
