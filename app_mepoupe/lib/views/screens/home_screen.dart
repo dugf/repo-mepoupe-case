@@ -1,6 +1,7 @@
 import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,6 +11,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int? numberGet;
+
+  @override
+  void initState() {
+    getCountShared();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
@@ -90,12 +99,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   scale: 1,
                                 ),
                               ),
-                              const Flexible(
+                              Flexible(
                                 flex: 2,
                                 child: FittedBox(
                                   child: Text(
-                                    '525',
-                                    style: TextStyle(
+                                    '${numberGet ?? 0}',
+                                    style: const TextStyle(
                                       fontSize: 100,
                                       color: Colors.white,
                                     ),
@@ -174,5 +183,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     });
+  }
+
+  getCountShared() async {
+    final prefs = await SharedPreferences.getInstance();
+    var returnCounter = prefs.getInt('counter');
+    numberGet = returnCounter;
   }
 }

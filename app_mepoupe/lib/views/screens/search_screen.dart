@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -172,11 +173,17 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<dynamic> validateTextFormField(AddressManager addressManager) async {
+    final prefs = await SharedPreferences.getInstance();
+
     final ViaCepService viaCepAddress = ViaCepService();
     bool result = await InternetConnectionChecker().hasConnection;
 
     if (result == true) {
       if (formKey.currentState!.validate()) {
+        var returnCounter = prefs.getInt('counter') ?? 0;
+        final addCounter = returnCounter + 1;
+        await prefs.setInt('counter', addCounter);
+
         validateReturnField = returnedDifferentData;
         if (!mounted) {}
         context
