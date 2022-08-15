@@ -188,8 +188,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
     if (result == true) {
       if (formKey.currentState!.validate()) {
-        prefs.setString('returnScreen', returnedDifferentData);
         validateReturnScreen = returnedDifferentData;
+        prefs.setString('returnScreen', returnedDifferentData);
 
         if (!mounted) {}
         context
@@ -199,7 +199,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
         try {
           await viaCepAddress.getAddressFromCEP(textCepEditingController.text);
-
           validateReturnScreen = returnedValidData;
           prefs.setString('returnScreen', returnedValidData);
           setState(() {
@@ -207,9 +206,7 @@ class _SearchScreenState extends State<SearchScreen> {
           });
         } catch (e) {
           validateReturnScreen = returnedNoValidData;
-
           prefs.setString('returnScreen', returnedNoValidData);
-
           setState(() {
             validateReturnScreen = returnedNoValidData;
           });

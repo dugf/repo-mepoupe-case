@@ -40,13 +40,17 @@ class _AddressReturnZipcodeState extends State<AddressReturnZipcode> {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: widget.address.complement != null &&
                       widget.address.complement!.isNotEmpty
-                  ? Text('${widget.address.street} '
-                      '- ${widget.address.complement} '
-                      '- ${widget.address.city} '
-                      '- CEP ${widget.address.zipCode}')
-                  : Text('${widget.address.street} '
-                      '- ${widget.address.city} '
-                      '- CEP ${widget.address.zipCode}'),
+                  ? FittedBox(
+                      child: Text('${widget.address.street} '
+                          '- ${widget.address.complement} '
+                          '- ${widget.address.city} '
+                          '- CEP ${widget.address.zipCode}'),
+                    )
+                  : FittedBox(
+                      child: Text('${widget.address.street} '
+                          '- ${widget.address.city} '
+                          '- CEP ${widget.address.zipCode}'),
+                    ),
             ),
           ),
           Flexible(
