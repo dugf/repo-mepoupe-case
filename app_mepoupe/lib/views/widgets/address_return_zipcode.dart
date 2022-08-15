@@ -1,5 +1,6 @@
 import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/bloc/address_manager.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class _AddressReturnZipcodeState extends State<AddressReturnZipcode> {
         children: [
           Flexible(
             child: Text(
-              'Endereço:',
+              Strings.titleAddressReturnZipCode,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -84,13 +85,13 @@ class _AddressReturnZipcodeState extends State<AddressReturnZipcode> {
                         child: FittedBox(
                           child: colorFavoriteZipCode == true
                               ? Text(
-                                  'Adicionado aos favoritos',
+                                  Strings.textButtonFavorited,
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Theme.of(context).primaryColor),
                                 )
                               : const Text(
-                                  'Adicionar aos favoritos',
+                                  Strings.textButtonAddFavorite,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,

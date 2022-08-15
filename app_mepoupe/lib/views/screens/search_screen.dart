@@ -30,6 +30,11 @@ class _SearchScreenState extends State<SearchScreen> {
       mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
 

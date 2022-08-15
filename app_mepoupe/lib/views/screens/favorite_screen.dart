@@ -1,6 +1,7 @@
 import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/datasources/db_util.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,10 +51,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       color: Theme.of(context).primaryColor,
                     ),
                     Text(
-                      'Meus favoritos',
+                      Strings.myFavorites,
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontFamily: 'Poppins',
+                          fontFamily: Strings.fontPoppins,
                           fontSize: queryData.size.longestSide * 0.034,
                           fontWeight: FontWeight.w600),
                     ),
@@ -152,7 +153,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   showAlertDialog(BuildContext context, Address pathItem) {
     Widget okButton = TextButton(
       child: Text(
-        "OK",
+        Strings.okValidateAlert,
         style: TextStyle(color: Theme.of(context).primaryColor),
       ),
       onPressed: () {
@@ -165,7 +166,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
     Widget cancelButton = TextButton(
       child: const Text(
-        "Cancelar",
+        Strings.cancelValidateAlert,
         style: TextStyle(color: Colors.red),
       ),
       onPressed: () {
@@ -174,8 +175,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: const Text("Deseja realmente remover?"),
-      content: const Text("Esta ação não pode ser desfeita."),
+      title: const Text(Strings.titleFavoriteAlert),
+      content: const Text(Strings.subtitleFavoriteAlert),
       actions: [cancelButton, okButton],
     );
 

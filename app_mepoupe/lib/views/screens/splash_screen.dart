@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:app_mepoupe/views/widgets/bottom_navigation_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Flexible(
                 child: Text(
-                  'O caminho da desfudência é por aqui',
+                  Strings.splashTitle,
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
