@@ -5,6 +5,7 @@ import 'package:app_mepoupe/views/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class BottomNavigationWidget extends StatefulWidget {
   const BottomNavigationWidget({Key? key}) : super(key: key);
 

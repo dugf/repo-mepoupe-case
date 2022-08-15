@@ -150,7 +150,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   showAlertDialog(BuildContext context, Address pathItem) {
-    // set up the button
     Widget okButton = TextButton(
       child: Text(
         "OK",
@@ -174,14 +173,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       },
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: const Text("Deseja realmente remover?"),
       content: const Text("Esta ação não pode ser desfeita."),
       actions: [cancelButton, okButton],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

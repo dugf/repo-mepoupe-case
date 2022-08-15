@@ -2,7 +2,7 @@
     package="com.dugfers.app_mepoupe">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="app_mepoupe"
+        android:label="Me Poupe"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

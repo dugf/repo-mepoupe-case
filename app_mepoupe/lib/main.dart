@@ -1,6 +1,6 @@
 import 'package:app_mepoupe/bloc/address_manager.dart';
 import 'package:app_mepoupe/bloc/screen_index_provider.dart';
-import 'package:app_mepoupe/views/widgets/bottom_navigation_widget.dart';
+import 'package:app_mepoupe/views/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +8,6 @@ import 'package:provider/provider.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Than we setup preferred orientations,
-  // and only after it finished we run our app
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(const MyApp()));
 }
@@ -40,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.indigo,
           primaryColor: const Color(0xff6d51ff),
         ),
-        home: const BottomNavigationWidget(),
+        home: const SplashScreen(),
       ),
     );
   }
