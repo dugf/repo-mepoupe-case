@@ -23,9 +23,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  Widget build(BuildContext context) {
-    funcInitShared();
+  void initState() {
+    func();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ScreenIndexProvider()),
@@ -47,8 +51,9 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  funcInitShared() async {
+  void func() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('returnScreen', Strings.returnNoneSearchType);
+    prefs.setString('returnCep', '');
   }
 }

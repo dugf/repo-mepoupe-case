@@ -25,21 +25,25 @@ class _SearchScreenState extends State<SearchScreen> {
   final returnedNoValidData = Strings.noReturnValidSearchType;
   final returnedDifferentData = Strings.returnDifferentSearchType;
   final returndatashared = Strings.returnNoneSearchType;
+  var returnCep = '';
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
 
   @override
+  void initState() {
+    getScreenShared();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
-
-    print('entrei no build do search $validateReturnScreen');
 
     return Consumer<AddressManager>(builder: (_, addressManager, __) {
       final address = addressManager.address ?? Address();
       final getCeps = addressManager.items.map((e) => e.zipCode);
 
-      getScreenShared();
       return Form(
         key: formKey,
         child: Column(
@@ -179,6 +183,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<dynamic> validateTextFormField(AddressManager addressManager) async {
     final prefs = await SharedPreferences.getInstance();
+    prefs.setString('returnScreen', returnedDifferentData);
+    prefs.setString('returnCep', textCepEditingController.text);
 
     final ViaCepService viaCepAddress = ViaCepService();
     bool result = await InternetConnectionChecker().hasConnection;
@@ -189,7 +195,6 @@ class _SearchScreenState extends State<SearchScreen> {
         final addCounter = returnCounter + 1;
         await prefs.setInt('counter', addCounter);
 
-        prefs.setString('returnScreen', returnedDifferentData);
         validateReturnScreen = returnedDifferentData;
 
         if (!mounted) {}
@@ -202,13 +207,15 @@ class _SearchScreenState extends State<SearchScreen> {
           await viaCepAddress.getAddressFromCEP(textCepEditingController.text);
           validateReturnScreen = returnedValidData;
           prefs.setString('returnScreen', returnedValidData);
+          prefs.setString('returnCep', textCepEditingController.text);
           setState(() {
             validateReturnScreen = returnedValidData;
           });
         } catch (e) {
           validateReturnScreen = returnedNoValidData;
-
+          prefs.setString('returnCep', textCepEditingController.text);
           prefs.setString('returnScreen', returnedNoValidData);
+
           setState(() {
             validateReturnScreen = returnedNoValidData;
           });
@@ -224,7 +231,12 @@ class _SearchScreenState extends State<SearchScreen> {
 
   getScreenShared() async {
     final prefs = await SharedPreferences.getInstance();
-    final returndatashared = prefs.getString('returnScreen');
+    final returndatashared = prefs.getString('returnScreen') ?? 'none';
+    final returnDataCep = prefs.getString('returnCep') ?? '';
+    returnCep = returnDataCep;
+    setState(() {
+      textCepEditingController.text = returnCep;
+    });
 
     setState(() {
       validateReturnScreen = returndatashared;
