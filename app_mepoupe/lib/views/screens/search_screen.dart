@@ -191,9 +191,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
     if (result == true) {
       if (formKey.currentState!.validate()) {
-        var returnCounter = prefs.getInt('counter') ?? 0;
-        final addCounter = returnCounter + 1;
-        await prefs.setInt('counter', addCounter);
+        var returnCounter = int.parse(addressManager.counter);
+        addCounterShared(returnCounter);
 
         validateReturnScreen = returnedDifferentData;
 
@@ -241,5 +240,9 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       validateReturnScreen = returndatashared;
     });
+  }
+
+  addCounterShared(int returnCounter) {
+    context.read<AddressManager>().addCounter(returnCounter);
   }
 }

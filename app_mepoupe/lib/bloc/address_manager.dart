@@ -3,10 +3,12 @@ import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/datasources/db_util.dart';
 import 'package:app_mepoupe/datasources/via_cep_service.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressManager extends ChangeNotifier {
   Address? address;
   List<Address> _items = [];
+  String counter = '0';
 
   //FUNÇÃO RESPONSÁVEL POR BUSCAR OS DADOS DA API E PREENCHER A INTERFACE DE ADDRESS
   Future<void> getAddress(String cep) async {
@@ -88,6 +90,22 @@ class AddressManager extends ChangeNotifier {
       'city': newPlace.city ?? '',
       'state': newPlace.state ?? ''
     });
+    notifyListeners();
+  }
+
+  Future<void> addCounter(int? count) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (count != null) {
+      final addition = count++;
+      await prefs.setInt('counter', addition);
+    }
+    notifyListeners();
+  }
+
+  Future<void> getCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+    final returnCountShared = prefs.getInt('counter') ?? 0;
+    counter = returnCountShared.toString();
     notifyListeners();
   }
 }
