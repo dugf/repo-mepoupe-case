@@ -188,10 +188,11 @@ class _SearchScreenState extends State<SearchScreen> {
     if (result == true) {
       if (formKey.currentState!.validate()) {
         var returnCounter = int.parse(addressManager.counter);
-        addCounterShared(returnCounter);
+        if (!mounted) {}
+        addCounterShared(returnCounter, context);
         addressManager.returnScreen = returnedDifferentData;
-        setScreenShared(returnedDifferentData);
-        setZipcodeShared(textCepEditingController.text);
+        setScreenShared(returnedDifferentData, context);
+        setZipcodeShared(textCepEditingController.text, context);
 
         if (!mounted) {}
         context
@@ -202,12 +203,13 @@ class _SearchScreenState extends State<SearchScreen> {
         try {
           await viaCepAddress.getAddressFromCEP(textCepEditingController.text);
           addressManager.returnScreen = returnedValidData;
-          setScreenShared(returnedValidData);
-          setZipcodeShared(textCepEditingController.text);
+          if (!mounted) {}
+          setScreenShared(returnedValidData, context);
+          setZipcodeShared(textCepEditingController.text, context);
         } catch (e) {
           addressManager.returnScreen = returnedNoValidData;
-          setScreenShared(returnedNoValidData);
-          setZipcodeShared(textCepEditingController.text);
+          setScreenShared(returnedNoValidData, context);
+          setZipcodeShared(textCepEditingController.text, context);
 
           return;
         }
@@ -228,15 +230,15 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  addCounterShared(int counterData) {
+  addCounterShared(int counterData, BuildContext context) {
     context.read<AddressManager>().addCounter(counterData);
   }
 
-  setScreenShared(String screenData) {
+  setScreenShared(String screenData, BuildContext context) {
     context.read<AddressManager>().setScreen(screenData);
   }
 
-  setZipcodeShared(String zipCodeData) {
+  setZipcodeShared(String zipCodeData, BuildContext context) {
     context.read<AddressManager>().setZipCode(zipCodeData);
   }
 }
