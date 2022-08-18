@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: queryData.size.height * 0.66 -
                             kBottomNavigationBarHeight,
                         child: Image.asset(
-                          'assets/images/image_background_home_screen.png',
+                          Strings.imageBackgroundHomeScreen,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Flexible(
                                 flex: 1,
                                 child: Image.asset(
-                                  'assets/icons/flag_home_icon.png',
+                                  Strings.iconFlagHome,
                                   fit: BoxFit.fill,
                                   scale: 1,
                                 ),
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       children: [
                         Image.asset(
-                          'assets/icons/flag_Icon.png',
+                          Strings.iconFlagIcon,
                           fit: BoxFit.fill,
                         ),
                         Container(

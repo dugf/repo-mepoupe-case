@@ -46,7 +46,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Image.asset(
-                      'assets/icons/star_stroke_icon.png',
+                      Strings.iconStarFavorite,
                       fit: BoxFit.fill,
                       color: Theme.of(context).primaryColor,
                     ),
@@ -108,7 +108,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                               ),
                                               InkWell(
                                                 child: Image.asset(
-                                                  'assets/icons/delete_icon.png',
+                                                  Strings.iconDelete,
                                                   fit: BoxFit.fill,
                                                   width: 20,
                                                   height: 20,

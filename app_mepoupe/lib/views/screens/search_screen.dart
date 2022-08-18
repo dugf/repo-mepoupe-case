@@ -25,7 +25,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final returnedNoValidData = Strings.noReturnValidSearchType;
   final returnedDifferentData = Strings.returnDifferentSearchType;
   final returndatashared = Strings.returnNoneSearchType;
-  var returnCep = '';
+  var returnCep = Strings.emptyText;
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
@@ -113,7 +113,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           prefixIcon: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Image.asset(
-                              'assets/icons/search_icon.png',
+                              Strings.iconSearchZipCode,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -141,7 +141,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (validateReturnScreen == returnedValidData)
+                      if (addressManager.returnScreen == returnedValidData)
                         address.zipCode == null
                             ? const CircularProgressIndicator()
                             : AddressReturnZipcode(
@@ -151,7 +151,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     : false,
                                 address: address,
                               ),
-                      if (validateReturnScreen == returnedNoValidData)
+                      if (addressManager.returnScreen == returnedNoValidData)
                         const Flexible(
                           child: Text(
                             Strings.noReturnValidSearch,
@@ -159,14 +159,14 @@ class _SearchScreenState extends State<SearchScreen> {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                      if (validateReturnScreen == returnedInvalidData)
+                      if (addressManager.returnScreen == returnedInvalidData)
                         Flexible(
                           child: Image.asset(
-                            'assets/images/location_review_bro_cep.png',
+                            Strings.imageLocationReviewBroCep,
                             fit: BoxFit.fill,
                           ),
                         ),
-                      if (validateReturnScreen == returnedDifferentData)
+                      if (addressManager.returnScreen == returnedDifferentData)
                         const Center(
                           child: CircularProgressIndicator(),
                         ),
@@ -182,10 +182,6 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<dynamic> validateTextFormField(AddressManager addressManager) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('returnScreen', returnedDifferentData);
-    prefs.setString('returnCep', textCepEditingController.text);
-
     final ViaCepService viaCepAddress = ViaCepService();
     bool result = await InternetConnectionChecker().hasConnection;
 
@@ -193,8 +189,9 @@ class _SearchScreenState extends State<SearchScreen> {
       if (formKey.currentState!.validate()) {
         var returnCounter = int.parse(addressManager.counter);
         addCounterShared(returnCounter);
-
-        validateReturnScreen = returnedDifferentData;
+        addressManager.returnScreen = returnedDifferentData;
+        setScreenShared(returnedDifferentData);
+        setZipcodeShared(textCepEditingController.text);
 
         if (!mounted) {}
         context
@@ -204,20 +201,14 @@ class _SearchScreenState extends State<SearchScreen> {
 
         try {
           await viaCepAddress.getAddressFromCEP(textCepEditingController.text);
-          validateReturnScreen = returnedValidData;
-          prefs.setString('returnScreen', returnedValidData);
-          prefs.setString('returnCep', textCepEditingController.text);
-          setState(() {
-            validateReturnScreen = returnedValidData;
-          });
+          addressManager.returnScreen = returnedValidData;
+          setScreenShared(returnedValidData);
+          setZipcodeShared(textCepEditingController.text);
         } catch (e) {
-          validateReturnScreen = returnedNoValidData;
-          prefs.setString('returnCep', textCepEditingController.text);
-          prefs.setString('returnScreen', returnedNoValidData);
+          addressManager.returnScreen = returnedNoValidData;
+          setScreenShared(returnedNoValidData);
+          setZipcodeShared(textCepEditingController.text);
 
-          setState(() {
-            validateReturnScreen = returnedNoValidData;
-          });
           return;
         }
       }
@@ -230,19 +221,22 @@ class _SearchScreenState extends State<SearchScreen> {
 
   getScreenShared() async {
     final prefs = await SharedPreferences.getInstance();
-    final returndatashared = prefs.getString('returnScreen') ?? 'none';
-    final returnDataCep = prefs.getString('returnCep') ?? '';
+    final returnDataCep = prefs.getString('returnCep') ?? Strings.emptyText;
     returnCep = returnDataCep;
     setState(() {
       textCepEditingController.text = returnCep;
     });
-
-    setState(() {
-      validateReturnScreen = returndatashared;
-    });
   }
 
-  addCounterShared(int returnCounter) {
-    context.read<AddressManager>().addCounter(returnCounter);
+  addCounterShared(int counterData) {
+    context.read<AddressManager>().addCounter(counterData);
+  }
+
+  setScreenShared(String screenData) {
+    context.read<AddressManager>().setScreen(screenData);
+  }
+
+  setZipcodeShared(String zipCodeData) {
+    context.read<AddressManager>().setZipCode(zipCodeData);
   }
 }

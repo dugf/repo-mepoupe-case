@@ -29,9 +29,10 @@ class Strings {
   //address return zipcode
   static const String titleAddressReturnZipCode = 'Endereço:';
   static const String textButtonFavorited = 'Adicionado aos favoritos';
-  static const String textButtonAddFavorite = 'Adicionado aos favoritos';
+  static const String textButtonAddFavorite = 'Adicionar aos favoritos';
+  static const String initializeNumberCounter = '0';
 
-  //address return zipcode
+  //bottom navigation
   static const String labelHomeBottomNavigation = 'Home';
   static const String labelSearchBottomNavigation = 'Procurar';
   static const String labelFavoriteBottomNavigation = 'Favoritos';
@@ -41,8 +42,31 @@ class Strings {
   static const String invalidZipCode = 'CEP inválido!';
   static const String noInternet = 'SEM INTERNET';
   static const String okValidateAlert = 'OK';
-  static const String cancelValidateAlert = 'OK';
+  static const String cancelValidateAlert = 'CANCELAR';
+  static const String errorZipCode = 'Erro ao buscar CEP';
 
 //font
   static const String fontPoppins = 'Poppins';
+
+  //link images
+  static const String imageLocationReviewBroCep =
+      'assets/images/location_review_bro_cep.png';
+  static const String imageBackgroundHomeScreen =
+      'assets/images/image_background_home_screen.png';
+
+  //link icons
+  static const String iconSearchZipCode = 'assets/icons/search_icon.png';
+  static const String iconStarFavorite = 'assets/icons/star_stroke_icon.png';
+  static const String iconDelete = 'assets/icons/delete_icon.png';
+  static const String iconFlagHome = 'assets/icons/flag_home_icon.png';
+  static const String iconFlagIcon = 'assets/icons/flag_Icon.png';
+  static const String iconLogoSplash = 'assets/icons/logo_splash_icon.png';
+  static const String iconColoredStar = 'assets/icons/colored_star_icon.png';
+  static const String iconStrokeStar = 'assets/icons/star_stroke_icon.png';
+  static const String iconHomeIcon = 'assets/icons/home_icon.png';
+  static const String iconFlagHomeIcon = 'assets/icons/flag_home_icon.png';
+
+  //default
+  static const String appName = 'Me Poupe';
+  static const String emptyText = '';
 }

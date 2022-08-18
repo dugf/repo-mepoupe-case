@@ -40,9 +40,9 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Me Poupe',
+        title: Strings.appName,
         theme: ThemeData(
-          fontFamily: 'Poppins',
+          fontFamily: Strings.fontPoppins,
           primarySwatch: Colors.indigo,
           primaryColor: const Color(0xff6d51ff),
         ),
@@ -54,6 +54,6 @@ class _MyAppState extends State<MyApp> {
   void func() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('returnScreen', Strings.returnNoneSearchType);
-    prefs.setString('returnCep', '');
+    prefs.setString('returnCep', Strings.emptyText);
   }
 }

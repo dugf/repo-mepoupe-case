@@ -38,21 +38,21 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           items: const [
             BottomNavigationBarItem(
               icon: ImageIcon(
-                AssetImage('assets/icons/home_icon.png'),
+                AssetImage(Strings.iconHomeIcon),
                 size: 20,
               ),
               label: Strings.labelHomeBottomNavigation,
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
-                AssetImage('assets/icons/flag_home_icon.png'),
+                AssetImage(Strings.iconFlagHomeIcon),
                 size: 20,
               ),
               label: Strings.labelSearchBottomNavigation,
             ),
             BottomNavigationBarItem(
                 icon: ImageIcon(
-                  AssetImage('assets/icons/star_stroke_icon.png'),
+                  AssetImage(Strings.iconStrokeStar),
                   size: 20,
                 ),
                 label: Strings.labelFavoriteBottomNavigation),

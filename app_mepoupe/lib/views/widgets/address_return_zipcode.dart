@@ -79,8 +79,8 @@ class _AddressReturnZipcodeState extends State<AddressReturnZipcode> {
                   children: [
                     Image.asset(
                       colorFavoriteZipCode == true
-                          ? 'assets/icons/colored_star_icon.png'
-                          : 'assets/icons/star_stroke_icon.png',
+                          ? Strings.iconColoredStar
+                          : Strings.iconStrokeStar,
                       fit: BoxFit.fill,
                     ),
                     Flexible(

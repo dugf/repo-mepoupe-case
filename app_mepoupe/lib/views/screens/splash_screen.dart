@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               Flexible(
                 child: Image.asset(
-                  'assets/icons/logo_splash_icon.png',
+                  Strings.iconLogoSplash,
                   width: 80,
                   height: 80,
                 ),

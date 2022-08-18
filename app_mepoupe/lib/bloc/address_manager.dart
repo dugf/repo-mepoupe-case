@@ -2,13 +2,15 @@ import 'dart:math';
 import 'package:app_mepoupe/bloc/address.dart';
 import 'package:app_mepoupe/datasources/db_util.dart';
 import 'package:app_mepoupe/datasources/via_cep_service.dart';
+import 'package:app_mepoupe/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressManager extends ChangeNotifier {
   Address? address;
   List<Address> _items = [];
-  String counter = '0';
+  String counter = Strings.initializeNumberCounter;
+  String? returnScreen = Strings.returnNoneSearchType;
 
   //FUNÇÃO RESPONSÁVEL POR BUSCAR OS DADOS DA API E PREENCHER A INTERFACE DE ADDRESS
   Future<void> getAddress(String cep) async {
@@ -82,13 +84,13 @@ class AddressManager extends ChangeNotifier {
     _items.add(newPlace);
     DbUtil.insert('places', {
       'id': newPlace.id!,
-      'titlecep': newPlace.zipCode ?? '',
-      'address': newPlace.street ?? '',
-      'number': newPlace.number ?? '',
-      'complement': newPlace.complement ?? '',
-      'district': newPlace.district ?? '',
-      'city': newPlace.city ?? '',
-      'state': newPlace.state ?? ''
+      'titlecep': newPlace.zipCode ?? Strings.emptyText,
+      'address': newPlace.street ?? Strings.emptyText,
+      'number': newPlace.number ?? Strings.emptyText,
+      'complement': newPlace.complement ?? Strings.emptyText,
+      'district': newPlace.district ?? Strings.emptyText,
+      'city': newPlace.city ?? Strings.emptyText,
+      'state': newPlace.state ?? Strings.emptyText,
     });
     notifyListeners();
   }
@@ -96,7 +98,7 @@ class AddressManager extends ChangeNotifier {
   Future<void> addCounter(int? count) async {
     final prefs = await SharedPreferences.getInstance();
     if (count != null) {
-      final addition = count++;
+      final addition = count + 1;
       await prefs.setInt('counter', addition);
     }
     notifyListeners();
@@ -106,6 +108,25 @@ class AddressManager extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final returnCountShared = prefs.getInt('counter') ?? 0;
     counter = returnCountShared.toString();
+    notifyListeners();
+  }
+
+  Future<void> setScreen(String textScreen) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('returnScreen', textScreen);
+    notifyListeners();
+  }
+
+  Future<void> getScreen() async {
+    final prefs = await SharedPreferences.getInstance();
+    final getScreenData = prefs.getString('returnScreen');
+    returnScreen = getScreenData ?? Strings.returnNoneSearchType;
+    notifyListeners();
+  }
+
+  Future<void> setZipCode(String textZipCode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('returnCep', textZipCode);
     notifyListeners();
   }
 }
