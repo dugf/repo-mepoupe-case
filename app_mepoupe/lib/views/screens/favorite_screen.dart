@@ -123,17 +123,31 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 8.0),
-                                            child: FittedBox(
-                                              child: pathItem
-                                                      .complement!.isNotEmpty
-                                                  ? Text('${pathItem.street} '
-                                                      '- ${pathItem.complement} '
-                                                      '- ${pathItem.city} '
-                                                      '- CEP ${pathItem.zipCode}')
-                                                  : Text('${pathItem.street} '
-                                                      '- ${pathItem.city} '
-                                                      '- CEP ${pathItem.zipCode}'),
-                                            ),
+                                            child:
+                                                pathItem.complement!.isNotEmpty
+                                                    ? Text(
+                                                        '${pathItem.street} '
+                                                        '- ${pathItem.complement} '
+                                                        '- ${pathItem.city} '
+                                                        '- CEP ${pathItem.zipCode}',
+                                                        style: TextStyle(
+                                                            fontSize: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .longestSide *
+                                                                .016),
+                                                      )
+                                                    : Text(
+                                                        '${pathItem.street} '
+                                                        '- ${pathItem.city} '
+                                                        '- CEP ${pathItem.zipCode}',
+                                                        style: TextStyle(
+                                                            fontSize: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .longestSide *
+                                                                .016),
+                                                      ),
                                           ),
                                         ],
                                       ),

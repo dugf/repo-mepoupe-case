@@ -73,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       top: queryData.size.height * 0.54 -
                           kBottomNavigationBarHeight,
                       child: Container(
-                        height: queryData.size.width * 0.46,
-                        width: queryData.size.width * 0.46,
+                        height: queryData.size.width * 0.42,
+                        width: queryData.size.width * 0.42,
                         decoration: const BoxDecoration(
                           color: Color(0xff6d51ff),
                           borderRadius: BorderRadius.all(Radius.circular(200)),
